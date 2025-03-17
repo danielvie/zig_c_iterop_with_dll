@@ -27,8 +27,9 @@ task
 task
 ```
 
-# Dependencies:
+# Dependencies used
 
-- CMake
+- CMake 3.30
+- Taskfile v3.39.2
 - Visual Studio 17 2022
 - Zig 0.14.0
