@@ -10,7 +10,19 @@ tasks:
     cmds:
      - cmake -B build
      - cmake --build build
-     - cp build/example/Debug/example.exe a_output
-     - cp build/mathlib/Debug/mathlib.dll a_output
-     - cp ziglib/zigmath.dll a_output
-     - ./a_output/example.exe
+     - mkdir -p build/z_output
+     - cp build/A_mathlib/Debug/mathlib.dll build/z_output
+     - cp build/C_c_example/Debug/example.exe build/z_output
+     - cp ziglib/zigmath.dll build/z_output
+     - ./build/z_output/example.exe
+
+  clean:
+    aliases: ["c"]
+    cmds:
+     - rm -rf build
+
+  folder:
+    aliases: ["f"]
+    cmds:
+     - mkdir -p ff_bla
+     - touch ff_bla/bla.txt

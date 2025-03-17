@@ -19,18 +19,5 @@ find_library(ZIGMATH_LIBRARY zigmath HINTS ${CMAKE_SOURCE_DIR}/ziglib)
 # Link against zigmath
 target_link_libraries(example PRIVATE ${ZIGMATH_LIBRARY})
 
-# Copy both DLLs to the output directory
-# add_custom_command(TARGET example POST_BUILD
-#     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-#     ${CMAKE_BINARY_DIR}/bin/mathlib.dll
-#     $<TARGET_FILE_DIR:example>
-# )
-
-# add_custom_command(TARGET example POST_BUILD
-#     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-#     ${CMAKE_SOURCE_DIR}/ziglib/zigmath.dll
-#     $<TARGET_FILE_DIR:example>
-# )
-
 # Ensure mathlib is built before example
 add_dependencies(example mathlib)

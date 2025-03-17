@@ -8,5 +8,5 @@ tasks:
   main:
     aliases: ["m"]
     cmds:
-     - cp ../mathlib/example/mathlib.dll ./lib
-     - zig build run
+     - cmake -B build
+     - cmake --build build

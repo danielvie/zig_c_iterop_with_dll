@@ -31,7 +31,7 @@ pub fn build(b: *std.Build) void {
     // Link the Zig dynamic library (zigmath)
     // Add the zigmath library as a dependency and link it
     exe.step.dependOn(&zigmath_lib.step); // Ensure zigmath is built first
-    exe.addLibraryPath(b.path("zig-out/lib")); // Where zigmath.dll/lib might be placed
+    exe.addLibraryPath(b.path("zig-out/bin")); // Where zigmath.dll/lib might be placed
     exe.linkSystemLibrary("zigmath");
 
     // Install the executable
