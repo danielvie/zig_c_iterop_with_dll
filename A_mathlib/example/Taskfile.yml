@@ -8,13 +8,15 @@ tasks:
   main:
     aliases: ["m"]
     cmds:
+    # building project
      - cmake -B build
      - cmake --build build --config Release
-     - cp ./build/Release/example.exe .
-     - cp ./build/mathlib_build/Release/mathlib.dll .
-     - ./example.exe
+    # copying dll to target directory
+     - cp ./build/mathlib_build/Release/mathlib.dll ./build/Release/
+    # running application
+     - ./build/Release/example.exe
 
-  clear:
+  clean:
     aliases: ["c"]
     cmds:
      - rm -rf build

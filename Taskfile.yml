@@ -9,7 +9,7 @@ tasks:
     aliases: ["m"]
     cmds:
     # run zig build
-     - cd B_zig_code && zig build run
+     - cd B_zig_code && zig build
     # copy zigmath to `ziglib` folder
      - mkdir -p ziglib
      - cp B_zig_code/zig-out/bin/zigmath.dll ziglib
@@ -31,3 +31,24 @@ tasks:
     cmds:
      - rm -rf build
      - rm -rf ziglib
+     
+  clean_all:
+    aliases: ["call"]
+    cmds:
+     - cd A_mathlib/ && task clean
+     - cd A_mathlib/example/ && task clean
+     - cd B_zig_code/ && task clean
+     - cd C_c_example/ && task clean
+     - task clean
+     
+  run_a:
+    cmds:
+     - cd A_mathlib/example/ && task
+
+  run_b:
+    cmds:
+     - cd B_zig_code/ && task
+     
+  run_c:
+    cmds:
+     - task

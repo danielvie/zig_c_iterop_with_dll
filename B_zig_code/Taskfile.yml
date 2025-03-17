@@ -8,7 +8,11 @@ tasks:
   main:
     aliases: ["m"]
     cmds:
-     - cp ../A_mathlib/example/mathlib.dll ./lib
+    # build mathlib
+     - cd ../A_mathlib && task
+    # copy dependencies
+     - cp ../A_mathlib/build/Debug/mathlib.dll ./lib
+    # build zig project
      - zig build run
 
   clean:
