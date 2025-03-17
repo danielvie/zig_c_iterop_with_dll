@@ -1,13 +1,20 @@
 const std = @import("std");
 
 pub fn build(b: *std.Build) void {
-    // Define the target (Windows in this case)
     const target = b.standardTargetOptions(.{});
-
-    // Define the optimization mode
     const optimize = b.standardOptimizeOption(.{});
 
-    // Create the executable
+    // --- Build the Zig dynamic library (zigmath) ---
+    const zigmath_lib = b.addSharedLibrary(.{
+        .name = "zigmath",
+        .root_source_file = b.path("lib/zigmath/zigmath.zig"),
+        .target = target,
+        .optimize = optimize,
+    });
+    // Install the library (copies zigmath.dll to zig-out/bin)
+    b.installArtifact(zigmath_lib);
+
+    // --- Build the executable ---
     const exe = b.addExecutable(.{
         .name = "zig_math_example",
         .root_source_file = b.path("src/main.zig"),
@@ -15,15 +22,17 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 
-    // Add the path to the C header file
+    // Link the C DLL (mathlib)
     exe.addIncludePath(b.path("lib"));
-
-    // Link against the mathlib.lib (import library for the DLL)
     exe.addLibraryPath(b.path("lib"));
     exe.linkSystemLibrary("mathlib");
-
-    // Ensure the DLL is copied to the output directory
     b.installBinFile("lib/mathlib.dll", "mathlib.dll");
+
+    // Link the Zig dynamic library (zigmath)
+    // Add the zigmath library as a dependency and link it
+    exe.step.dependOn(&zigmath_lib.step); // Ensure zigmath is built first
+    exe.addLibraryPath(b.path("zig-out/lib")); // Where zigmath.dll/lib might be placed
+    exe.linkSystemLibrary("zigmath");
 
     // Install the executable
     b.installArtifact(exe);
@@ -35,6 +44,5 @@ pub fn build(b: *std.Build) void {
         run_cmd.addArgs(args);
     }
 
-    // Register the run step as "zig run"
     b.step("run", "Run the app").dependOn(&run_cmd.step);
 }
