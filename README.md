@@ -3,28 +3,26 @@
 This example is creating a C library (A_mathlib) and a Zig library and 
 using them on each other.
 
-There are 3 scenarius in this example:
+There are 3 scenarios in this example:
 
-## 1. C library and C example os using the library
+    How to build:
 
-how to build this:
+## 1. C library and C example of using the library
 
 ```sh
-cd A_mathlib/example
-task
+task run_a
 ```
 
-## 2. C library together with a Zig library and running on a zig program
+## 2. C library together with a Zig library and running on a Zig program
 
 ```sh
-cd B_zig_code
-task
+task run_b
 ```
 
 ## 3. C library together with a Zig library and running on a C program
 
 ```sh
-task
+task run_c
 ```
 
 # Dependencies used

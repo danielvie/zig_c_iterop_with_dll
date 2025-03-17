@@ -11,10 +11,13 @@ tasks:
     # building project
      - cmake -B build
      - cmake --build build --config Release
+    # creating build/z_output dir
+     - mkdir -p build/z_output
     # copying dll to target directory
-     - cp ./build/mathlib_build/Release/mathlib.dll ./build/Release/
+     - cp ./build/mathlib_build/Release/mathlib.dll ./build/z_output/
+     - cp ./build/Release/example.exe ./build/z_output/
     # running application
-     - ./build/Release/example.exe
+     - ./build/z_output/example.exe
 
   clean:
     aliases: ["c"]
