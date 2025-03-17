@@ -11,8 +11,10 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
+
     // Install the library (copies zigmath.dll to zig-out/bin)
-    b.installArtifact(zigmath_lib);
+    const zigmath_install_step = b.addInstallArtifact(zigmath_lib, .{});
+    b.getInstallStep().dependOn(&zigmath_install_step.step); // Ensure installation is part of the default build
 
     // --- Build the executable ---
     const exe = b.addExecutable(.{
@@ -29,9 +31,8 @@ pub fn build(b: *std.Build) void {
     b.installBinFile("lib/mathlib.dll", "mathlib.dll");
 
     // Link the Zig dynamic library (zigmath)
-    // Add the zigmath library as a dependency and link it
-    exe.step.dependOn(&zigmath_lib.step); // Ensure zigmath is built first
-    exe.addLibraryPath(b.path("zig-out/bin")); // Where zigmath.dll/lib might be placed
+    exe.step.dependOn(&zigmath_install_step.step); // Ensure zigmath is installed before exe links
+    exe.addLibraryPath(b.path("zig-out/bin")); // Where zigmath.dll is placed
     exe.linkSystemLibrary("zigmath");
 
     // Install the executable

@@ -10,3 +10,8 @@ tasks:
     cmds:
      - cmake -B build
      - cmake --build build
+
+  clean:
+    aliases: ["c"]
+    cmds:
+     - rm -rf build

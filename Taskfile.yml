@@ -8,21 +8,26 @@ tasks:
   main:
     aliases: ["m"]
     cmds:
+    # run zig build
+     - cd B_zig_code && zig build run
+    # copy zigmath to `ziglib` folder
+     - mkdir -p ziglib
+     - cp B_zig_code/zig-out/bin/zigmath.dll ziglib
+     - cp B_zig_code/zig-out/lib/zigmath.lib ziglib
+    # building project
      - cmake -B build
      - cmake --build build
+    # copying executable and dependencies to `z_output`
      - mkdir -p build/z_output
      - cp build/A_mathlib/Debug/mathlib.dll build/z_output
      - cp build/C_c_example/Debug/example.exe build/z_output
+     - cp build/C_c_example/Debug/example.exe build/z_output
      - cp ziglib/zigmath.dll build/z_output
+    # running example.exe
      - ./build/z_output/example.exe
 
   clean:
     aliases: ["c"]
     cmds:
      - rm -rf build
-
-  folder:
-    aliases: ["f"]
-    cmds:
-     - mkdir -p ff_bla
-     - touch ff_bla/bla.txt
+     - rm -rf ziglib

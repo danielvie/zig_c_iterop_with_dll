@@ -2,5 +2,6 @@ build/
 zig-out/
 .zig-cache/
 
+*.exe
 *.dll
 *.lib
