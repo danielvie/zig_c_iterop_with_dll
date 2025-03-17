@@ -1,0 +1,12 @@
+version: '3'
+
+tasks:
+
+  default:
+    deps: [main]
+
+  main:
+    aliases: ["m"]
+    cmds:
+     - cp ../mathlib/example/mathlib.dll ./lib
+     - zig build run
